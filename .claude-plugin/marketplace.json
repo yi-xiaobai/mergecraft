@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "git-workflow",
-      "source": "../",
+      "source": "./",
       "description": "End-to-end Git constraints, exceptions, recovery, and delivery rules"
     }
   ]
