@@ -1,9 +1,7 @@
-# Git Workflow Skill
+# MergeCraft
 
-A Codex-first repository containing one self-contained Skill for the complete
-Git lifecycle. The Skill carries team constraints, conflict precedence,
-exceptions, failure recovery, provider behavior, and publication criteria;
-native model capabilities perform the Git mechanics.
+A shared Claude Code and Codex plugin containing one self-contained Skill for
+safe, end-to-end Git delivery.
 
 ## Structure
 
@@ -20,13 +18,21 @@ native model capabilities perform the Git mechanics.
 ```
 
 There are no nested plugin packages, slash commands, or specialist agents. GitHub
-and GitLab behavior lives in the same Skill so Codex has one source of truth.
+and GitLab behavior lives in the same Skill so both agents use one source of
+truth.
+
+## Install in Claude Code
+
+```bash
+claude plugin marketplace add yi-xiaobai/mergecraft
+claude plugin install git-workflow@mergecraft
+```
 
 ## Install in Codex
 
 ```bash
 codex plugin marketplace add ./.agents/plugins
-codex plugin add git-workflow@collabcraft-plugins
+codex plugin add git-workflow@mergecraft
 ```
 
 Start a new Codex thread after installation so the Skill is discovered.

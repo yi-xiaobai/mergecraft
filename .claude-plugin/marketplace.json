@@ -1,6 +1,6 @@
 {
-  "name": "collabcraft-plugins",
-  "description": "A single shared Git workflow skill, designed for Codex",
+  "name": "mergecraft",
+  "description": "A shared Git workflow skill for Claude Code and Codex",
   "owner": {
     "name": "yixiaobai"
   },

@@ -1,7 +1,7 @@
 {
   "name": "git-workflow",
   "version": "0.2.0",
-  "description": "Codex-first rules for safe, end-to-end Git delivery",
+  "description": "MergeCraft rules for safe, end-to-end Git delivery",
   "author": {
     "name": "yixiaobai"
   }

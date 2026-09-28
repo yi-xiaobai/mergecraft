@@ -1,8 +1,8 @@
-# CollabCraft Plugins 设计思想
+# MergeCraft 设计思想
 
 ## 目标
 
-CollabCraft 用 Plugin 分发团队知识和工作流，解决规范反复解释、经验难以
+MergeCraft 用 Plugin 分发团队知识和工作流，解决规范反复解释、经验难以
 复用以及关键流程容易遗漏的问题。它不重复封装模型已经具备的通用能力。
 
 设计一项能力时，先回答：

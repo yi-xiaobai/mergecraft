@@ -1,7 +1,7 @@
 {
-  "name": "collabcraft-plugins",
+  "name": "mergecraft",
   "interface": {
-    "displayName": "CollabCraft Git Workflow"
+    "displayName": "MergeCraft"
   },
   "plugins": [
     {

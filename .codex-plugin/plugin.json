@@ -1,15 +1,15 @@
 {
   "name": "git-workflow",
   "version": "0.2.0",
-  "description": "Codex-first rules for safe, end-to-end Git delivery",
+  "description": "MergeCraft rules for safe, end-to-end Git delivery",
   "author": {
     "name": "yixiaobai"
   },
-  "homepage": "https://github.com/yi-xiaobai/collabCraft-plugins",
-  "repository": "https://github.com/yi-xiaobai/collabCraft-plugins",
+  "homepage": "https://github.com/yi-xiaobai/mergecraft",
+  "repository": "https://github.com/yi-xiaobai/mergecraft",
   "skills": "./skills/",
   "interface": {
-    "displayName": "Git Workflow",
+    "displayName": "MergeCraft",
     "shortDescription": "Automate Git delivery with team safety rules",
     "longDescription": "One self-contained Skill for branch, commit, checks, synchronization, push, pull or merge request, CI, merge, tag, and release decisions.",
     "developerName": "yixiaobai",
