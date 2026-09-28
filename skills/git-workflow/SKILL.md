@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: Use for branch, commit, push, PR/MR, merge, tag, and release work. Enforce English PR/MR content and GitLab squash/source-branch removal defaults.
+description: Use whenever creating or updating branches, commits, pushes, PRs/MRs, merges, tags, or releases. Always create PR/MR titles and descriptions in English and enforce GitLab squash/source-branch removal defaults.
 ---
 
 # Git workflow
@@ -23,21 +23,27 @@ Skill. Inspect Git state before changing it and verify the result afterward.
 
 ## PR/MR requirements
 
-- Build metadata from the actual commits and diff. Write the title and entire
-  description in English, including headings and prose. Keep code identifiers,
-  paths, and commands unchanged.
+- Before creating or updating a PR/MR, fetch the resolved target and inspect the
+  complete diff from the target branch to the current branch
+  (`<target>...HEAD`). Generate the English title from the primary change shown
+  by that diff, not from the branch name, commit subjects, or task wording.
+  Write the English description from the same diff and actual verification,
+  even when requirements or commits are Chinese. Keep code identifiers, paths,
+  and commands unchanged. Do not use `--fill`.
 - Create a normal PR/MR, assign the current user when supported, and use the
   resolved target branch. Creating a PR/MR does not authorize merging it.
-- For every GitLab MR, explicitly include these options in `glab mr create`:
+- For every GitLab MR, pass the English metadata explicitly with `--title` and
+  `--description`, and include these options in `glab mr create`:
 
   ```text
   --squash-before-merge=true --remove-source-branch=true
   ```
 
-- After creation, query the MR and verify that `squash_on_merge` and
-  `should_remove_source_branch` are both `true`. If permitted, correct false
-  values with `squash=true` and `remove_source_branch=true`, then verify again.
-  Report any project policy that prevents either setting.
+- After creation, query the MR and verify the title and description are English
+  and that `squash_on_merge` and `should_remove_source_branch` are both `true`.
+  Immediately update any non-English metadata. If permitted, correct false
+  option values with `squash=true` and `remove_source_branch=true`, then verify
+  again. Report any project policy that prevents either setting.
 
 ## Safety boundaries
 

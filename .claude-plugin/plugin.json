@@ -1,6 +1,6 @@
 {
   "name": "git-workflow",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MergeCraft rules for safe, end-to-end Git delivery",
   "author": {
     "name": "yixiaobai"
