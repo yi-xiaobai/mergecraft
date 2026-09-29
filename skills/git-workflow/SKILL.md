@@ -79,8 +79,6 @@ commands that safely completes the requested operation.
 Do not run `scripts/release_gate.py` for an ordinary commit or push. Run it only
 when the user explicitly requests validation or a plugin release is being
 prepared.
-Historical safeguards remain covered by evidence `393b3df`, `e5f5879`,
-`0335bba`, `f41ba8a`, `9f334f2`, `5d30367`, and `b2630cb`.
 
 ## Completion
 
