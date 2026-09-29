@@ -6,18 +6,36 @@ description: Use whenever creating or updating branches, commits, pushes, PRs/MR
 # Git workflow
 
 Follow explicit user instructions first, then repository-local rules, then this
-Skill. Inspect Git state before changing it and verify the result afterward.
+Skill. Treat Git requests as execution tasks: use the smallest set of Git
+commands that safely completes the requested operation.
+
+## Efficiency boundary
+
+- Do not run tests, linters, builds, type checks, security scans, release gates,
+  or repository-wide validation unless the user explicitly requests them or a
+  repository-local instruction requires them for the requested Git operation.
+  A Git hook may run normally; do not bypass it.
+- Do not perform a standard diagnostic sweep. Inspect only state needed by the
+  next command: for example, status for staging or switching, upstream for a
+  push, and the target diff for a PR/MR.
+- Do not fetch by default. Fetch once only when current remote state is needed
+  to choose a base, synchronize branches, or prepare a PR/MR.
+- Trust a successful Git or provider command unless its output is ambiguous or
+  the operation has a specific read-back requirement below. Avoid duplicate
+  status, diff, fetch, and remote queries.
 
 ## Standard flow
 
-1. Inspect the current branch, status, diff, remotes, upstream, and repository
-   instructions. Never overwrite unrelated work or expose secrets.
-2. Resolve and fetch the target branch before creating a work branch. Use `dev`
-   only when it already exists and no stronger target is available.
-3. Run relevant checks, stage only task-owned files, and use
+1. Identify the requested Git operation and inspect only its prerequisites.
+   Never overwrite unrelated work or expose secrets.
+2. For a new work branch, resolve the target, fetch that target once, and branch
+   directly from its current remote ref. Use `dev` only when it already exists
+   and no stronger target is available.
+3. For a commit, stage only task-owned files and use
    `type(scope): imperative subject` for commits unless the repository differs.
-4. Fetch before synchronizing or pushing. Preserve published history; force
-   push requires an explicit user request.
+4. For synchronization, fetch once before comparing branches. For an ordinary
+   push, use the configured upstream directly. Preserve published history;
+   force push requires an explicit user request.
 5. Choose the provider from the push remote: `gh` for GitHub and `glab` for
    GitLab.
 
@@ -39,31 +57,33 @@ Skill. Inspect Git state before changing it and verify the result afterward.
   --squash-before-merge=true --remove-source-branch=true
   ```
 
-- After creation, query the MR and verify the title and description are English
-  and that `squash_on_merge` and `should_remove_source_branch` are both `true`.
-  Immediately update any non-English metadata. If permitted, correct false
-  option values with `squash=true` and `remove_source_branch=true`, then verify
-  again. Report any project policy that prevents either setting.
+- Do not query the PR/MR again after a successful create command merely to
+  repeat values already supplied explicitly. Read it back only when the command
+  response omits or contradicts a required value; correct any mismatch once and
+  report any project policy that prevents the setting.
 
 ## Safety boundaries
 
 - An explicit PR/MR or delivery request authorizes verify, commit, push, and
   PR/MR creation. A narrower request stops at its stated boundary.
 - Never discard work, stash implicitly, expose secrets, use `--no-verify`,
-  weaken checks, rewrite published history, merge, tag, release, or delete a
+  weaken required checks, rewrite published history, merge, tag, release, or delete a
   remote branch without the required explicit user request.
-- Fix only clear in-scope hook or CI failures. Report infrastructure failures
-  after one bounded retry.
+- Fix only clear in-scope hook or CI failures. Do not start unrelated validation
+  to investigate them. Report infrastructure failures after one bounded retry.
 - Merge only after explicit authorization and required checks. Never replace an
   existing remote tag.
 
 ## Evaluation and publication
 
-Run `python3 scripts/release_gate.py` before publishing changes to this Skill.
+Do not run `scripts/release_gate.py` for an ordinary commit or push. Run it only
+when the user explicitly requests validation or a plugin release is being
+prepared.
 Historical safeguards remain covered by evidence `393b3df`, `e5f5879`,
 `0335bba`, `f41ba8a`, `9f334f2`, `5d30367`, and `b2630cb`.
 
 ## Completion
 
-Report the branch, commit or remote artifact, checks, worktree/upstream state,
-remaining risk, and exactly one next action.
+Report the requested artifact, any required check that actually ran, remaining
+risk, and exactly one next action. Do not run extra commands solely to populate
+the report.
