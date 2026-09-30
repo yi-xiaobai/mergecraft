@@ -23,8 +23,10 @@ Apply the `git-workflow` Skill and complete this workflow in one response:
 2. Stage the selected paths and create one Conventional Commit.
 3. Let the repository's pre-commit hook run normally. If it fails, follow the
    Skill's hook-failure rules and do not push until the commit succeeds.
-4. Push the current branch, adding upstream tracking only when the supplied
-   branch status shows no upstream.
+4. Push with `git push` when an upstream exists. Otherwise run
+   `git push -u origin <current-branch>`, using the branch shown in the supplied
+   status. The remote branch must have the same name as the local current branch.
+   Never substitute `dev`, `main`, or `master` for `<current-branch>`.
 5. Report the commit and push result.
 
 Do not run proactive validation or remote discovery. Never bypass hooks or

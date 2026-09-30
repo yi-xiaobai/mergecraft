@@ -102,6 +102,14 @@ class WorkflowContractTest(unittest.TestCase):
         commands = sorted(path.name for path in (ROOT / "commands").glob("*.md"))
         self.assertEqual(commands, ["commit-push-mr.md", "commit-push.md"])
 
+    def test_delivery_commands_push_to_the_same_named_branch(self) -> None:
+        for name in ("commit-push.md", "commit-push-mr.md"):
+            command = (ROOT / "commands" / name).read_text(encoding="utf-8")
+            self.assertIn("`git push` when an upstream exists", command)
+            self.assertIn("`git push -u origin <current-branch>`", command)
+            self.assertIn("same name as the local current branch", command)
+            self.assertIn("Never substitute `dev`, `main`, or `master`", command)
+
     def test_performance_budget_covers_native_push_and_fast_delivery(self) -> None:
         budget = json.loads((ROOT / "evals/performance-budget.json").read_text(encoding="utf-8"))
         scenarios = {item["id"]: item for item in budget["scenarios"]}

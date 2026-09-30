@@ -24,8 +24,11 @@ pausing between successful steps:
    or unrelated work; otherwise select only task-owned paths.
 2. Generate one Conventional Commit message plus an English MR title and
    description from the supplied change in one reasoning pass.
-3. Stage the selected paths, commit, and push. Add upstream tracking only when
-   the supplied branch status shows no upstream.
+3. Stage the selected paths and commit. Use `git push` when an upstream exists.
+   Otherwise run `git push -u origin <current-branch>`, using the branch
+   shown in the supplied status. The remote branch must use the same name as the local current branch.
+   Never substitute `dev`, `main`, or `master` for
+   `<current-branch>`.
 4. Create the GitLab MR with explicit metadata and defaults:
 
    ```text
