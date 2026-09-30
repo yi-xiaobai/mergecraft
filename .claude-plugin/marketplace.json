@@ -1,6 +1,6 @@
 {
   "name": "mergecraft",
-  "description": "A shared Git workflow skill for Claude Code and Codex",
+  "description": "Team Git rules plus bounded push and MR delivery paths",
   "owner": {
     "name": "yixiaobai"
   },
@@ -8,7 +8,7 @@
     {
       "name": "git-workflow",
       "source": "./",
-      "description": "End-to-end Git constraints, exceptions, recovery, and delivery rules"
+      "description": "Team Git conventions with pre-commit-aware delivery commands"
     }
   ]
 }

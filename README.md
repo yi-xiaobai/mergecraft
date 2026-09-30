@@ -1,7 +1,7 @@
 # MergeCraft
 
-A shared Claude Code and Codex plugin containing one self-contained Skill for
-safe, end-to-end Git delivery.
+A shared Claude Code and Codex plugin that separates team Git rules from a
+bounded Claude Code delivery command.
 
 ## Structure
 
@@ -11,15 +11,19 @@ safe, end-to-end Git delivery.
 ├── .codex-plugin/plugin.json
 ├── .claude-plugin/plugin.json
 ├── .github/workflows/validate.yml
+├── commands/
+│   ├── commit-push.md
+│   └── commit-push-mr.md
 ├── evals/
 ├── scripts/
 ├── skills/git-workflow/SKILL.md
 └── tests/
 ```
 
-There are no nested plugin packages, slash commands, or specialist agents. GitHub
-and GitLab behavior lives in the same Skill so both agents use one source of
-truth.
+Ordinary Git mechanics remain model-native, with the Skill supplying team
+conventions and safety boundaries. Claude Code users can invoke `/commit-push`
+for a pre-commit-aware push boundary or `/commit-push-mr` for the complete
+cross-system workflow. Codex applies the same Skill to explicit delivery tasks.
 
 ## Install in Claude Code
 
@@ -44,7 +48,7 @@ python3 scripts/git_context.py
 python3 scripts/release_gate.py
 ```
 
-The release gate verifies the single-Skill structure, Codex distribution,
-failure-driven scenario catalog, and automated tests. Passing deterministic
-checks is necessary but not sufficient: model scenarios must also beat baseline
-without a blocking safety finding before publication.
+The release gate verifies the narrow-Skill structure, bounded delivery command,
+performance budgets, distribution, scenario catalog, and automated tests.
+Before publication, record three matched trials for duration, tokens, tool calls,
+and remote round trips as defined in `evals/performance-budget.json`.

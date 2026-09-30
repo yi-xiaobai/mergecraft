@@ -1,7 +1,7 @@
 {
   "name": "git-workflow",
-  "version": "0.2.1",
-  "description": "MergeCraft rules for safe, end-to-end Git delivery",
+  "version": "0.3.0",
+  "description": "MergeCraft team Git rules with a bounded GitLab delivery path",
   "author": {
     "name": "yixiaobai"
   },
@@ -10,15 +10,15 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "MergeCraft",
-    "shortDescription": "Automate Git delivery with team safety rules",
-    "longDescription": "One self-contained Skill for branch, commit, checks, synchronization, push, pull or merge request, CI, merge, tag, and release decisions.",
+    "shortDescription": "Apply team Git rules without slowing ordinary Git",
+    "longDescription": "Team-specific branch, commit, GitLab MR, and safety rules with a bounded delivery path; ordinary Git operations remain model-native.",
     "developerName": "yixiaobai",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
     "defaultPrompt": [
-      "Deliver these changes through a reviewed pull or merge request.",
-      "Create a safe branch and commit the current task.",
-      "Diagnose this failed Git workflow and continue safely."
+      "Commit the current changes, handle hook failures safely, and push.",
+      "Commit these changes, push them, and create a GitLab merge request.",
+      "Create an English GitLab MR with squash and source-branch removal enabled."
     ]
   }
 }

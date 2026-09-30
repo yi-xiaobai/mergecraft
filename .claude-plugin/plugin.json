@@ -1,7 +1,7 @@
 {
   "name": "git-workflow",
-  "version": "0.2.1",
-  "description": "MergeCraft rules for safe, end-to-end Git delivery",
+  "version": "0.3.0",
+  "description": "MergeCraft team Git rules with pre-commit-aware delivery commands",
   "author": {
     "name": "yixiaobai"
   }

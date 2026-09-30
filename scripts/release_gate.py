@@ -96,8 +96,39 @@ def validate_single_skill(errors: list[str]) -> None:
     content = skill.read_text(encoding="utf-8")
     if not content.startswith("---\nname: git-workflow\ndescription:"):
         errors.append("git-workflow: invalid Skill frontmatter")
-    if "explicit user request" not in content or "repository-local" not in content or "## Evaluation and publication" not in content:
+    if "explicit user request" not in content or "repository-local" not in content or "## Safety boundaries" not in content:
         errors.append("git-workflow: conflict precedence is incomplete")
+
+
+def validate_fast_path(errors: list[str]) -> None:
+    commands = {
+        "commit-push": ROOT / "commands" / "commit-push.md",
+        "commit-push-mr": ROOT / "commands" / "commit-push-mr.md",
+    }
+    for name, command in commands.items():
+        if not command.exists():
+            errors.append(f"missing commands/{name}.md")
+            continue
+        content = command.read_text(encoding="utf-8")
+        if content.count("!`") > 2:
+            errors.append(f"{name}: more than two eager context calls")
+        for forbidden in ("git fetch", "release_gate.py", "git_context.py", "--fill"):
+            if forbidden in content:
+                errors.append(f"{name}: slow-path operation present: {forbidden}")
+
+    budget_path = ROOT / "evals" / "performance-budget.json"
+    if not budget_path.exists():
+        errors.append("missing performance budget")
+        return
+    budget = load_json(budget_path)
+    scenarios = {item.get("id"): item for item in budget.get("scenarios", [])}
+    required = {"native-push", "commit-push", "commit-push-mr"}
+    for scenario_id in required:
+        scenario = scenarios.get(scenario_id)
+        if not scenario:
+            errors.append(f"performance budget missing {scenario_id}")
+        elif scenario.get("candidate_status") not in {"pending", "measured"}:
+            errors.append(f"{scenario_id}: invalid candidate status")
 
 
 def run(command: list[str]) -> int:
@@ -110,6 +141,7 @@ def main() -> int:
     validate_catalog(errors)
     validate_distribution(errors)
     validate_single_skill(errors)
+    validate_fast_path(errors)
     if errors:
         for error in errors:
             print(f"ERROR: {error}")

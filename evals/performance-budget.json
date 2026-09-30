@@ -1,0 +1,29 @@
+{
+  "measurement": {
+    "trials": 3,
+    "record": ["duration_seconds", "total_tokens", "tool_calls", "remote_round_trips"],
+    "release_rule": "Run matched trials before publication. The candidate must improve median duration or tokens without a blocking safety regression."
+  },
+  "scenarios": [
+    {
+      "id": "native-push",
+      "prompt": "Push the current branch.",
+      "execution": "model-native",
+      "candidate_status": "pending"
+    },
+    {
+      "id": "commit-push",
+      "prompt": "/commit-push",
+      "execution": "explicit-command",
+      "candidate_status": "pending"
+    },
+    {
+      "id": "commit-push-mr",
+      "prompt": "/commit-push-mr dev",
+      "execution": "explicit-command",
+      "observed_baseline_seconds": 20,
+      "baseline_source": "user observation",
+      "candidate_status": "pending"
+    }
+  ]
+}

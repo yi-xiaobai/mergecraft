@@ -94,10 +94,12 @@ LLM 负责选择工具、组织流程、解释结果和处理非确定性判断�
 
 ## 当前选择
 
-仓库只发布一个位于 `skills/git-workflow/SKILL.md` 的 Skill，不再按 Git、
-GitLab、命令或平台拆分 Plugin。分支、commit、同步、push、GitHub PR、GitLab
-MR、CI、merge、tag 与 release 的判断规则都以该文件为唯一事实源；通用操作
-仍由模型原生能力执行，状态采集、测试和发布门禁由确定性脚本执行。
+普通 Git 的操作机制使用模型原生能力；`skills/git-workflow/SKILL.md` 为写
+操作补充团队约定和安全边界。Claude Code 保留两个显式交付入口：
+`/commit-push` 负责 commit、pre-commit 失败处理和 push 的完整边界，
+`/commit-push-mr` 在此基础上继续创建 GitLab MR。前者的价值是统一 hook
+失败后的停止与恢复策略，不是重复包装 Git 命令。
 
 规则演进遵循“真实失败证据 → 重复摩擦 → 规则与例外 → 场景评测 → 发布门禁”。
-未通过阻断项检查或相对 baseline 没有收益时，不发布新规则。
+评测同时记录正确性、耗时、Token、工具调用和远程往返。未通过阻断项检查、
+超过性能预算或相对 baseline 没有收益时，不发布新规则。
