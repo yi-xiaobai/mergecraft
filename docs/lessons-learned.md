@@ -43,10 +43,6 @@
     → 用场景评测验证
     → 再决定是否发布
 
-10. Git 工作流只维护一个 `skills/git-workflow/SKILL.md`，不要按 branch、
-    commit、GitHub、GitLab 再拆 Plugin 或 Command；平台差异作为同一规则的
-    条件分支，确定性检查放到 scripts/CI。
-
 
 ## 规矩
 1. 以“下一步行动”为先导。
